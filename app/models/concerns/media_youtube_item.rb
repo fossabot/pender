@@ -18,32 +18,33 @@ module MediaYoutubeItem
   end
 
   def data_from_youtube_item
-    video = Yt::Video.new url: self.url
-    video_data = video.snippet.data
-
     self.data[:raw][:api] = {}
-    self.youtube_item_direct_attributes.each do |attr|
-      self.data[:raw][:api][attr] =
-        begin
-          video_data.dig(attr.camelize(:lower)) || video.send(attr)
-        rescue
-          ''
-        end
+    self.data[:html] = ''
+    handle_exceptions(self, Yt::Errors::NoItems) do
+      video = Yt::Video.new url: self.url
+      video_data = video.snippet.data
+      self.youtube_item_direct_attributes.each do |attr|
+        self.data[:raw][:api][attr] =
+          begin
+            video_data.dig(attr.camelize(:lower)) || video.send(attr)
+          rescue Exception => e
+            ''
+          end
+      end
+      data = self.data
+
+      self.data.merge!({
+        username: get_info_from_data('api', data, 'channel_title'),
+        description: get_info_from_data('api', data, 'description'),
+        title: get_info_from_data('api', data, 'title'),
+        picture: self.get_youtube_thumbnail,
+        html: get_info_from_data('api', data, 'embed_html'),
+        author_name: get_info_from_data('api', data, 'channel_title'),
+        author_picture: self.get_youtube_item_author_picture,
+        author_url: 'https://www.youtube.com/channel/' + get_info_from_data('api', data, 'channel_id'),
+        published_at: get_info_from_data('api', data, 'published_at')
+      })
     end
-
-    data = self.data
-
-    self.data.merge!({
-      username: data[:raw][:api]['channel_title'],
-      description: data[:raw][:api]['description'],
-      title: data[:raw][:api]['title'],
-      picture: self.get_youtube_thumbnail,
-      html: data[:raw][:api]['embed_html'],
-      author_name: data[:raw][:api]['channel_title'],
-      author_picture: self.get_youtube_item_author_picture, 
-      author_url: 'https://www.youtube.com/channel/' + data[:raw][:api]['channel_id'],
-      published_at: data[:raw][:api]['published_at']
-    })
   end
 
   def get_youtube_thumbnail

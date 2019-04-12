@@ -160,4 +160,18 @@ class YoutubeTest < ActiveSupport::TestCase
     assert_equal '', data['html']
   end
 
+  test "should not crash when parsing a video from a deleted account" do
+    url = 'https://www.youtube.com/watch?v=8XSexJBbzBs&list=FL4WCpfrfrzQqIyd7nPp9RTg&index=32'
+    url = 'https://www.youtube.com/watch?v=6q_Tcyeq5fk&feature=youtu.be'
+    m = create_media url: url
+    data = m.as_json
+    assert_equal({}, data[:raw][:api])
+    assert_equal '', data['username']
+    assert_equal '', data['title']
+    assert_equal '', data['description']
+    assert_equal '', data['author_url']
+    assert_equal '', data['picture']
+    assert_equal '', data['html']
+  end
+
 end
