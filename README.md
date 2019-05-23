@@ -4,6 +4,7 @@
 [![Issue Count](https://codeclimate.com/repos/5715585edb5e930072004cc5/badges/f5868b936888747f319f/issue_count.svg)](https://codeclimate.com/repos/5715585edb5e930072004cc5/feed)
 [![Test Coverage](https://codeclimate.com/repos/5715585edb5e930072004cc5/badges/f5868b936888747f319f/coverage.svg)](https://codeclimate.com/repos/5715585edb5e930072004cc5/coverage)
 [![Travis](https://travis-ci.org/meedan/pender.svg?branch=develop)](https://travis-ci.org/meedan/pender/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmeedan%2Fpender.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmeedan%2Fpender?ref=badge_shield)
 
 A parsing, archiving and rendering service.
 
@@ -390,3 +391,7 @@ We can also run performance tests. It calculates the amount of time taken to val
 ### Credits
 
 Meedan (hello@meedan.com)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmeedan%2Fpender.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmeedan%2Fpender?ref=badge_large)
